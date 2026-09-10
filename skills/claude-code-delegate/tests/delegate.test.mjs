@@ -330,10 +330,8 @@ test("dead worker becomes a ready failure without killing stale PIDs", () => {
 
 test("a live launcher with no worker eventually fails", () => {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "delegate-queued-"));
-  const resolved = process.platform === "win32" ? cwd.toLowerCase() : cwd;
-  const key = crypto.createHash("sha256").update(resolved).digest("hex").slice(0, 16);
   const jobId = `claude-fixture-${crypto.randomBytes(4).toString("hex")}`;
-  const dir = path.join(os.tmpdir(), "codex-claude-code-delegate", key, jobId);
+  const dir = jobDirectoryFor(cwd, jobId);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "state.json"), JSON.stringify({ jobId, cwd, status: "queued", launcherPid: process.pid, createdAt: new Date(Date.now() - 65000).toISOString() }));
   const result = run(["result", "--cwd", cwd, "--job-id", jobId, "--json"]);

@@ -348,6 +348,18 @@ function isAlive(pid) {
   try { process.kill(pid, 0); return true; } catch (error) { return error.code === "EPERM"; }
 }
 
+function unlinkLockWithRetry(filePath) {
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    try { fs.unlinkSync(filePath); return true; }
+    catch (error) {
+      if (error.code === "ENOENT") return true;
+      if (!["EPERM", "EBUSY"].includes(error.code)) throw error;
+      if (attempt < 19) sleepSync(20);
+    }
+  }
+  return false;
+}
+
 function withJobLock(jobDir, callback) {
   const lockPath = path.join(jobDir, "state.lock");
   const deadline = Date.now() + 5000;
@@ -389,9 +401,9 @@ function withJobLock(jobDir, callback) {
           }
         }
       } catch (recoveryError) {
-        if (!["EEXIST", "ENOENT"].includes(recoveryError.code)) throw recoveryError;
+        if (!["EEXIST", "ENOENT", "EPERM", "EBUSY"].includes(recoveryError.code)) throw recoveryError;
       } finally {
-        if (recovery !== undefined) { fs.closeSync(recovery); fs.unlinkSync(recoveryPath); }
+        if (recovery !== undefined) { fs.closeSync(recovery); unlinkLockWithRetry(recoveryPath); }
       }
       if (Date.now() >= deadline) throw new Error("Timed out waiting for the delegate job state lock.");
       sleepSync(20);
