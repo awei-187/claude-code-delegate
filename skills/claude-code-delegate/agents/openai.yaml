@@ -1,0 +1,6 @@
+interface:
+  display_name: "Claude Code Delegate"
+  short_description: "Delegate edits and bounded test-repair loops to Claude Code"
+  default_prompt: "Use $claude-code-delegate to plan this code change, have Claude Code implement it, run a fixed helper-controlled verification and repair loop when safe, and then independently review the result."
+policy:
+  allow_implicit_invocation: false

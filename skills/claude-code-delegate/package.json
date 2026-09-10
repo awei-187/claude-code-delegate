@@ -1,0 +1,15 @@
+{
+  "name": "claude-code-delegate-skill",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A durable, bounded Codex skill for delegating implementation to local Claude Code.",
+  "type": "module",
+  "scripts": {
+    "check": "node --check scripts/claude-delegate.mjs && node --check tests/fake-claude.mjs",
+    "test": "node --test tests/delegate.test.mjs",
+    "verify": "npm run check && npm test"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "claude-code-delegate",
+  "version": "1.0.0",
+  "description": "Durably delegate bounded code implementation and test-repair loops to a local Claude Code CLI.",
+  "author": {
+    "name": "Claude Code Delegate Project"
+  },
+  "keywords": ["claude-code", "delegation", "coding", "testing"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Claude Code Delegate",
+    "shortDescription": "Delegate bounded implementation to local Claude Code",
+    "longDescription": "Codex plans and reviews while a restricted local Claude Code worker edits files. Durable jobs support visible Windows execution, structured verification, bounded repair, timeouts, recovery, and cleanup.",
+    "developerName": "Claude Code Delegate Project",
+    "category": "Developer Tools",
+    "capabilities": ["Write"],
+    "defaultPrompt": [
+      "Use Claude Code to implement this change, verify it, and review the result.",
+      "Delegate this bug fix to Claude Code with a bounded test-repair loop."
+    ]
+  }
+}
