@@ -1,5 +1,7 @@
 # Claude Code Delegate
 
+**English** | [简体中文](README.zh-CN.md)
+
 [![Validate plugin](https://github.com/awei-187/claude-code-delegate/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/awei-187/claude-code-delegate/actions/workflows/ci.yml)
 [![GitHub release](https://img.shields.io/github/v/release/awei-187/claude-code-delegate)](https://github.com/awei-187/claude-code-delegate/releases/latest)
 
